@@ -5,35 +5,21 @@ import ChatMessage from '../components/ChatMessage';
 import ChatInput from '../components/ChatInput';
 import TypingIndicator from '../components/TypingIndicator';
 
-/**
- * ChatPage 组件 - 聊天页面
- * 
- * 功能：
- * - 管理聊天消息状态
- * - 处理用户发送消息
- * - 显示 AI 回复
- * - 自动滚动到最新消息
- * - 清空聊天记录
- * 
- * 这个页面专注于聊天功能，布局由 Layout 组件提供
- */
+
 const ChatPage: React.FC = () => {
-  // -----------------------
-  // 聊天状态 (Chat State)
-  // -----------------------
   const [messages, setMessages] = useState<Array<{
     id: number, 
     role: 'user' | 'assistant', 
     content: string, 
     timestamp: string, 
     model_used?: string
-  }>>([]); // 聊天记录：用户和助手的所有消息
+  }>>([]); 
 
-  const [isLoading, setIsLoading] = useState(false); // 是否正在等待AI回复
-  const [models, setModels] = useState<ModelInfo[]>([]); // 可用的模型列表
-  const [error, setError] = useState<string | null>(null); // 页面级错误提示
+  const [isLoading, setIsLoading] = useState(false); 
+  const [models, setModels] = useState<ModelInfo[]>([]); 
+  const [error, setError] = useState<string | null>(null); 
 
-  const messagesEndRef = useRef<HTMLDivElement>(null); // 用来标记消息列表底部的DOM节点
+  const messagesEndRef = useRef<HTMLDivElement>(null); 
 
   // -----------------------
   // 滚动逻辑 (Side Effect)

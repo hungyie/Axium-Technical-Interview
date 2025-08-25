@@ -3,9 +3,9 @@ import { ChatRequest, ModelInfo } from '../types/api';
 
 // ChatInput 的 props 定义
 interface ChatInputProps {
-  onSendMessage: (request: ChatRequest) => void; // 父组件传入的函数，用于发送消息到 API
-  isLoading: boolean;                            // 是否正在等待 AI 回复 (用来禁用输入/按钮)
-  models: ModelInfo[];                           // 模型列表 (供用户选择)
+  onSendMessage: (request: ChatRequest) => void; 
+  isLoading: boolean;                            
+  models: ModelInfo[];                           
 }
 
 // ChatInput 组件：负责输入消息 & 参数设置 & 发送
@@ -13,13 +13,13 @@ const ChatInput: React.FC<ChatInputProps> = ({ onSendMessage, isLoading, models 
   // -----------------------
   // 局部状态 (Local State)
   // -----------------------
-  const [message, setMessage] = useState('');                // 输入框里的文字
-  const [selectedModel, setSelectedModel] = useState('gpt-3.5-turbo'); // 当前选择的模型
-  const [temperature, setTemperature] = useState(0.7);       // AI 随机性 (0=保守，2=创意)
-  const [maxTokens, setMaxTokens] = useState(150);           // 回复最大 token 数
-  const [showSettings, setShowSettings] = useState(false);   // 是否展开设置面板
-  const [useStreaming, setUseStreaming] = useState(false);   // 是否使用流式响应
-  const textareaRef = useRef<HTMLTextAreaElement>(null);     // 引用 textarea DOM 节点，用于自动伸缩高度
+  const [message, setMessage] = useState('');                
+  const [selectedModel, setSelectedModel] = useState('gpt-3.5-turbo'); 
+  const [temperature, setTemperature] = useState(0.7);       
+  const [maxTokens, setMaxTokens] = useState(150);           
+  const [showSettings, setShowSettings] = useState(false);   
+  const [useStreaming, setUseStreaming] = useState(false);   
+  const textareaRef = useRef<HTMLTextAreaElement>(null);    
 
   // 自动调整 textarea 高度 (根据内容行数扩展)
   useEffect(() => {

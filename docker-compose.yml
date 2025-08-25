@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # 后端服务
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: llm-practice-backend
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD}@postgres:5432/llm_practice
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+      - DEBUG=false
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - llm-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # 前端服务
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: llm-practice-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - llm-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+
+# 数据卷
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+# 网络
+networks:
+  llm-network:
+    driver: bridge

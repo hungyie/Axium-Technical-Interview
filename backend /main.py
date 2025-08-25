@@ -15,8 +15,8 @@ from routes import router
 
 # Create FastAPI app
 app = FastAPI(
-    title="LLM Practice API",
-    description="A comprehensive FastAPI backend for LLM chat with conversation history",
+    title="Axium interview prototype",
+    description="",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc"
@@ -68,9 +68,8 @@ if __name__ == "__main__":
     debug = os.getenv("DEBUG", "True").lower() == "true"
     
     uvicorn.run(
-        "main:app", # It’s like the Python path to your FastAPI app object, not a filesystem path.
-        host=host,
+        "main:app", 
         port=port,
         reload=debug,
-        log_level="info" # controls the minimum severity level of logs that will be shown in stdout/stderr.
+        log_level="info"
     )
